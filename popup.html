@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 280px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      margin: 0;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e1e1e1;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .info-section {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    
+    .info-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    
+    .info-text {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0 0;
+    }
+    
+    .feature-list li {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+      padding-left: 16px;
+      position: relative;
+    }
+    
+    .feature-list li:before {
+      content: "•";
+      color: #28a745;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    
+    .test-section {
+      border-top: 1px solid #e1e1e1;
+      padding-top: 16px;
+    }
+    
+    .test-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+    }
+    
+    .test-button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    
+    .test-button:hover:not(:disabled) {
+      background: #218838;
+    }
+    
+    .test-button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      margin-top: 8px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span style="font-size: 20px;">📞</span>
+    <h1>Phone Caller</h1>
+  </div>
+  
+  <div class="info-section">
+    <div class="info-title">How to use:</div>
+    <div class="info-text">Select any phone number on a webpage and right-click to call with your default calling app.</div>
+    <ul class="feature-list">
+      <li>Select phone number text</li>
+      <li>Right-click → "Call [number]"</li>
+      <li>Uses your default calling app (Teams, Skype, etc.)</li>
+    </ul>
+  </div>
+  
+  <div class="test-section">
+    <div class="info-title">Test a number:</div>
+    <input type="text" id="testNumber" class="test-input" placeholder="Enter phone number (e.g., +1-555-123-4567)">
+    <button id="testCall" class="test-button">Test Call</button>
+    <div id="status" class="status" style="display: none;"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
