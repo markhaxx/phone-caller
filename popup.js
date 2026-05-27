@@ -4,6 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
   var testNumberInput = document.getElementById('testNumber');
   var testCallButton = document.getElementById('testCall');
   var statusDiv = document.getElementById('status');
+  var countryCodeSelect = document.getElementById('countryCode');
+  var countryStatusDiv = document.getElementById('countryStatus');
+
+  // Load saved country code
+  browser.storage.local.get('countryCode', function(result) {
+    if (result.countryCode) {
+      countryCodeSelect.value = result.countryCode;
+    }
+  });
+
+  // Save country code when changed
+  countryCodeSelect.addEventListener('change', function() {
+    var selectedCode = countryCodeSelect.value;
+    browser.storage.local.set({ countryCode: selectedCode }, function() {
+      countryStatusDiv.textContent = '✓ Saved: ' + selectedCode;
+      setTimeout(function() {
+        countryStatusDiv.textContent = '';
+      }, 2000);
+    });
+  });
 
   // Test call button handler
   testCallButton.addEventListener('click', function() {
@@ -14,22 +34,23 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    var cleanNumber = cleanPhoneNumber(phoneNumber);
+    var countryCode = countryCodeSelect.value;
+    var cleanNumber = cleanPhoneNumber(phoneNumber, countryCode);
     
     if (!isValidPhoneNumber(cleanNumber)) {
       showStatus('Please enter a valid phone number', 'error');
       return;
     }
     
-    // Attempt to call
     callNumber(cleanNumber);
-    showStatus('Attempting to call ' + cleanNumber + '...', 'success');
+    showStatus('Calling ' + cleanNumber + '...', 'success');
   });
 
   // Input validation
   testNumberInput.addEventListener('input', function() {
     var phoneNumber = testNumberInput.value.trim();
-    var cleanNumber = cleanPhoneNumber(phoneNumber);
+    var countryCode = countryCodeSelect.value;
+    var cleanNumber = cleanPhoneNumber(phoneNumber, countryCode);
     var isValid = phoneNumber === '' || isValidPhoneNumber(cleanNumber);
     
     testCallButton.disabled = !isValid || phoneNumber === '';
@@ -51,18 +72,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 3000);
   }
 
-  function cleanPhoneNumber(phoneNumber) {
-    // Remove all non-digit characters except +
+  function cleanPhoneNumber(phoneNumber, countryCode) {
     var cleaned = phoneNumber.replace(/[^\d+]/g, '');
     
-    // Handle US numbers - add +1 if missing
-    if (cleaned.length === 10 && cleaned.indexOf('+') !== 0) {
-      cleaned = '+1' + cleaned;
-    } else if (cleaned.length === 11 && cleaned.charAt(0) === '1' && cleaned.indexOf('+') !== 0) {
-      cleaned = '+' + cleaned;
+    if (cleaned.indexOf('+') === 0) {
+      return cleaned;
     }
     
-    return cleaned;
+    var codeDigits = countryCode.replace(/[^\d]/g, '');
+    
+    if (cleaned.length > codeDigits.length && cleaned.indexOf(codeDigits) === 0) {
+      return '+' + cleaned;
+    }
+    
+    return countryCode + cleaned;
   }
 
   function isValidPhoneNumber(phoneNumber) {
@@ -71,10 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function callNumber(phoneNumber) {
-    var cleanNumber = cleanPhoneNumber(phoneNumber);
-    var telUrl = 'tel:' + cleanNumber;
-    
-    // Simple approach - just open the tel: URL
+    var telUrl = 'tel:' + phoneNumber;
     window.open(telUrl, '_blank');
   }
 });
