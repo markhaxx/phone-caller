@@ -27,6 +27,33 @@
       color: #333;
     }
     
+    .section {
+      margin-bottom: 16px;
+    }
+    
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    
+    .country-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      background: white;
+      box-sizing: border-box;
+    }
+    
+    .country-status {
+      font-size: 12px;
+      color: #28a745;
+      margin-top: 4px;
+      min-height: 16px;
+    }
+    
     .info-section {
       background: #f8f9fa;
       padding: 12px;
@@ -34,39 +61,10 @@
       margin-bottom: 16px;
     }
     
-    .info-title {
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #333;
-    }
-    
     .info-text {
       font-size: 13px;
       color: #666;
       line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0 0;
-    }
-    
-    .feature-list li {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 4px;
-      padding-left: 16px;
-      position: relative;
-    }
-    
-    .feature-list li:before {
-      content: "•";
-      color: #28a745;
-      font-weight: bold;
-      position: absolute;
-      left: 0;
     }
     
     .test-section {
@@ -93,7 +91,6 @@
       cursor: pointer;
       font-size: 13px;
       width: 100%;
-      transition: background 0.2s;
     }
     
     .test-button:hover:not(:disabled) {
@@ -116,13 +113,11 @@
     .status.success {
       background: #d4edda;
       color: #155724;
-      border: 1px solid #c3e6cb;
     }
     
     .status.error {
       background: #f8d7da;
       color: #721c24;
-      border: 1px solid #f5c6cb;
     }
   </style>
 </head>
@@ -132,19 +127,55 @@
     <h1>Phone Caller</h1>
   </div>
   
+  <div class="section">
+    <div class="section-title">Default Country Code:</div>
+    <select id="countryCode" class="country-select">
+      <option value="+1">🇺🇸 United States / Canada (+1)</option>
+      <option value="+44">🇬🇧 United Kingdom (+44)</option>
+      <option value="+33">🇫🇷 France (+33)</option>
+      <option value="+49">🇩🇪 Germany (+49)</option>
+      <option value="+39">🇮🇹 Italy (+39)</option>
+      <option value="+34">🇪🇸 Spain (+34)</option>
+      <option value="+31">🇳🇱 Netherlands (+31)</option>
+      <option value="+32">🇧🇪 Belgium (+32)</option>
+      <option value="+41">🇨🇭 Switzerland (+41)</option>
+      <option value="+43">🇦🇹 Austria (+43)</option>
+      <option value="+45">🇩🇰 Denmark (+45)</option>
+      <option value="+46">🇸🇪 Sweden (+46)</option>
+      <option value="+47">🇳🇴 Norway (+47)</option>
+      <option value="+358">🇫🇮 Finland (+358)</option>
+      <option value="+351">🇵🇹 Portugal (+351)</option>
+      <option value="+353">🇮🇪 Ireland (+353)</option>
+      <option value="+48">🇵🇱 Poland (+48)</option>
+      <option value="+420">🇨🇿 Czech Republic (+420)</option>
+      <option value="+36">🇭🇺 Hungary (+36)</option>
+      <option value="+30">🇬🇷 Greece (+30)</option>
+      <option value="+90">🇹🇷 Turkey (+90)</option>
+      <option value="+7">🇷🇺 Russia (+7)</option>
+      <option value="+86">🇨🇳 China (+86)</option>
+      <option value="+81">🇯🇵 Japan (+81)</option>
+      <option value="+82">🇰🇷 South Korea (+82)</option>
+      <option value="+91">🇮🇳 India (+91)</option>
+      <option value="+61">🇦🇺 Australia (+61)</option>
+      <option value="+64">🇳🇿 New Zealand (+64)</option>
+      <option value="+55">🇧🇷 Brazil (+55)</option>
+      <option value="+52">🇲🇽 Mexico (+52)</option>
+      <option value="+54">🇦🇷 Argentina (+54)</option>
+      <option value="+27">🇿🇦 South Africa (+27)</option>
+      <option value="+972">🇮🇱 Israel (+972)</option>
+      <option value="+971">🇦🇪 UAE (+971)</option>
+      <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
+    </select>
+    <div id="countryStatus" class="country-status"></div>
+  </div>
+  
   <div class="info-section">
-    <div class="info-title">How to use:</div>
-    <div class="info-text">Select any phone number on a webpage and right-click to call with your default calling app.</div>
-    <ul class="feature-list">
-      <li>Select phone number text</li>
-      <li>Right-click → "Call [number]"</li>
-      <li>Uses your default calling app (Teams, Skype, etc.)</li>
-    </ul>
+    <div class="info-text">Select any phone number on a webpage and right-click to call. Numbers without country code will use your selected default.</div>
   </div>
   
   <div class="test-section">
-    <div class="info-title">Test a number:</div>
-    <input type="text" id="testNumber" class="test-input" placeholder="Enter phone number (e.g., +1-555-123-4567)">
+    <div class="section-title">Test a number:</div>
+    <input type="text" id="testNumber" class="test-input" placeholder="Enter phone number">
     <button id="testCall" class="test-button">Test Call</button>
     <div id="status" class="status" style="display: none;"></div>
   </div>
